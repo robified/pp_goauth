@@ -3,6 +3,11 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+// require the express-session
+const session = require('express-session');
+
+// loat the env vars
+require('dotenv').config();
 
 // connect to the database with Mongoose
 require('./config/database');
@@ -21,6 +26,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+// mounting the express-session module
+app.use(
+    session({
+        secret: process.env.SESSION_SECRET,
+        // to remove deprecation warnings
+        resave: false,
+        saveUninitialized: true,
+    })
+);
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
