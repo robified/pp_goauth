@@ -32,4 +32,13 @@ router.get('/logout', function (req, res) {
     res.redirect('/');
 });
 
+/* an example if we want to add a map
+router.post('/maps', isLoggedIn, mapsCtrl.addMap); 
+*/
+// this is how we can protect a specific route
+function isLoggedIn(req, res, next) {
+    if (req.isAuthenticated()) return next();
+    res.redirect('/auth/google');
+}
+
 module.exports = router;
