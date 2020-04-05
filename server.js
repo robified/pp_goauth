@@ -14,6 +14,9 @@ require('dotenv').config();
 // connect to the database with Mongoose
 require('./config/database');
 
+// configure the passport module
+require('./config/passport');
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
