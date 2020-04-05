@@ -3,8 +3,10 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-// require the express-session
+// require the express-session module
 const session = require('express-session');
+// require the passport module
+const passport = require('passport');
 
 // loat the env vars
 require('dotenv').config();
@@ -26,7 +28,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-// mounting the express-session module
+// mounting the express-session middleware
 app.use(
     session({
         secret: process.env.SESSION_SECRET,
@@ -35,6 +37,9 @@ app.use(
         saveUninitialized: true,
     })
 );
+// mounting the passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
