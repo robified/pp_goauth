@@ -2,11 +2,10 @@ var express = require('express');
 var router = express.Router();
 // require passport module
 const passport = require('passport');
+const usersCtrl = require('../controllers/users');
 
 /* GET home page. */
-router.get('/', function (req, res, next) {
-    res.render('index', { title: 'Express' });
-});
+router.get('/', usersCtrl.index);
 
 // this is the log in route
 router.get(
@@ -21,16 +20,16 @@ router.get(
 router.get(
     '/oauth2callback',
     passport.authenticate('google', {
-        successRedirect: '/index',
+        successRedirect: '/',
         // if user does not consent, then they can't use the app
-        failureRedirect: '/index',
+        failureRedirect: '/',
     })
 );
 
 // this is the log out route
 router.get('/logout', function (req, res) {
     req.logout();
-    res.redirect('/index');
+    res.redirect('/');
 });
 
 module.exports = router;
