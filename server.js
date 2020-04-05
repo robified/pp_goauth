@@ -8,8 +8,11 @@ const session = require('express-session');
 // require the passport module
 const passport = require('passport');
 
-// loat the env vars
+// load the env vars before connecting to the database
 require('dotenv').config();
+
+// create the Express app
+var app = express();
 
 // connect to the database with Mongoose
 require('./config/database');
@@ -19,8 +22,6 @@ require('./config/passport');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-
-var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
